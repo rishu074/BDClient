@@ -5,6 +5,7 @@ import (
 
 	Conf "github.com/NotRoyadma/BDClient/config"
 	Stats "github.com/NotRoyadma/BDClient/stats"
+	Workers "github.com/NotRoyadma/BDClient/workers"
 )
 
 func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,5 +32,6 @@ func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(`Started upload workers.`))
 	Stats.SetStats(true)
+	Workers.StartUploadWorker()
 
 }
