@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	Conf "github.com/NotRoyadma/BDClient/config"
+	Stats "github.com/NotRoyadma/BDClient/stats"
 )
 
 func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +20,16 @@ func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	stat, _ := Stats.GetStats()
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`Started Upload workers.`))
+	if stat {
+		w.Write([]byte(`Worker is already running.`))
+		return
+	}
+
+	w.Write([]byte(`Started upload workers.`))
+	Stats.SetStats(true)
+
 }
