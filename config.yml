@@ -1,0 +1,9 @@
+Name: "BDClient"
+Version: "1.0.0"
+port: 8080
+node: "game1"
+DataDirectory: "./uploads"
+DataFile: "data.zip"
+Token: "SomerandomToken"
+ServiceToken: "mysupersecretToken"
+IpHeader: "default"
