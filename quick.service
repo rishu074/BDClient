@@ -1,13 +1,13 @@
 [Unit]
 Description=BDClient Service
-ConditionPathExists=<dir>
+ConditionPathExists=/var/apps/bdclient/
 After=network.target
 [Service]
 Type=simple
 User=root
 Group=root
-WorkingDirectory=<dir>
-ExecStart=/usr/local/go/bin/go run client.go
+WorkingDirectory=/var/apps/bdclient/
+ExecStart=/usr/local/go/bin/go run /var/apps/bdclient/client.go
 Restart=on-failure
 RestartSec=10
 StandardOutput=syslog
