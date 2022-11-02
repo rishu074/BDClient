@@ -75,3 +75,8 @@ mv /var/apps/bdclient/quick.service /var/apps/ && mv /var/apps/quick.service /et
 ```
 systemctl enable --now bdclient.service
 ```
+
+Crontab
+```
+0 */12 * * * cd /var/apps/bdclient/ && bash /var/apps/bdclient/node.sh mysupersecretToken 1337
+```
