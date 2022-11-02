@@ -29,7 +29,7 @@ Then Just Open your crontab
 crontab -e
 ```
 
-After all Paste this line there, but make sure your token is replaced at (token) and your app port at (aport)
+After all Paste this line there, but make sure your ServiceToken is replaced at (token) and your app port at (aport)
 
 ```
 0 */12 * * * cd (DIR) && bash (DIR)/node.sh (token) (aport)
