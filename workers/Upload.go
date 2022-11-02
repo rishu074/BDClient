@@ -39,8 +39,13 @@ func StartUploadWorker() {
 	headers.Set("token", Conf.Conf.Token)
 	headers.Set("node", Conf.Conf.Node)
 
-	ws, _, err := websocket.DefaultDialer.Dial(u.String(), headers)
+	ws, res, err := websocket.DefaultDialer.Dial(u.String(), headers)
 	if err != nil {
+		if err == websocket.ErrBadHandshake {
+			p := make([]byte, 200)
+			_, _ = res.Body.Read(p)
+			logger.WriteLog("workers/upload.go 38 " + err.Error() + string(p))
+		}
 		logger.WriteERRLog("workers/upload.go 38 " + err.Error())
 	}
 
