@@ -8,3 +8,4 @@ Token: "SomerandomToken"
 ServiceToken: "mysupersecretToken"
 IpHeader: "default"
 remote: "localhost:1337"
+ssl: true

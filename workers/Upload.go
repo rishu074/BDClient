@@ -32,7 +32,15 @@ func StartUploadWorker() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{Scheme: "ws", Host: *addr, Path: "/api/upload"}
+	IsSSLEnabled := Conf.Conf.Ssl
+	var SchemeString string = "ws"
+	if IsSSLEnabled {
+		SchemeString = "wss"
+	} else {
+		SchemeString = "ws"
+	}
+
+	u := url.URL{Scheme: SchemeString, Host: *addr, Path: "/api/upload"}
 	logger.WriteLog("connecting to " + u.String())
 
 	headers := http.Header{}
@@ -44,9 +52,10 @@ func StartUploadWorker() {
 		if err == websocket.ErrBadHandshake {
 			p := make([]byte, 200)
 			_, _ = res.Body.Read(p)
-			logger.WriteLog("workers/upload.go 38 " + err.Error() + string(p))
+			logger.WriteERRLog("workers/upload.go 38 " + err.Error() + string(p))
 		}
 		logger.WriteERRLog("workers/upload.go 38 " + err.Error())
+		return
 	}
 
 	logger.WriteLog("connected to " + u.String())
@@ -196,7 +205,7 @@ func StartUploadWorker() {
 				Event: "subfolder_chunk_data",
 				Chunk: NextChunk,
 			})
-			logger.WriteLog("Sending data chunk" + strconv.Itoa(len(NextChunk)))
+			logger.WriteLog("Sending data chunk of length " + strconv.Itoa(len(NextChunk)) + " bytes")
 			ws.WriteMessage(websocket.TextMessage, dataTosend)
 			CurrentBytes += int64(len(NextChunk))
 
