@@ -20,7 +20,6 @@ import (
 
 func StartUploadWorker() {
 	logger.WriteLog("Started Wroker workers/upload.go")
-	var addr = flag.String("addr", Conf.Conf.Remote, "http service address")
 
 	// Defer theese things to be safe
 	defer logger.WriteLog("Ended Wroker workers/upload.go")
@@ -40,7 +39,7 @@ func StartUploadWorker() {
 		SchemeString = "ws"
 	}
 
-	u := url.URL{Scheme: SchemeString, Host: *addr, Path: "/api/upload"}
+	u := url.URL{Scheme: SchemeString, Host: Conf.Conf.Remote, Path: "/api/upload"}
 	logger.WriteLog("connecting to " + u.String())
 
 	headers := http.Header{}
