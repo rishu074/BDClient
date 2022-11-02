@@ -34,3 +34,44 @@ After all Paste this line there, but make sure your ServiceToken is replaced at 
 ```
 0 */12 * * * cd (DIR) && bash (DIR)/node.sh (token) (aport)
 ```
+
+### Quick installation
+
+If you don't care about which dir to use or else follow theese steps
+
+```
+sudo apt update -y && sudo apt upgrade -y
+```
+
+Installation of required packages
+```
+sudo apt install nginx zip unzip wget curl -y
+```
+
+Installation of Client
+```
+mkdir /var/apps && cd /var/apps && mkdir bdclient && cd bdclient && git clone https://github.com/NotRoyadma/BDClient.git .
+```
+
+Installing golang
+```
+cd /usr/local && wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+cd /usr/local && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz && rm go1.19.3.linux-amd64.tar.gz
+```
+
+Configure
+```
+mkdir /var/apps/bdclient/logs
+```
+
+```
+nano /var/apps/bdclient/config.yml
+```
+
+Deploy
+```
+mv /var/apps/bdclient/quick.service /var/apps/ && mv /var/apps/quick.service /etc/systemd/system/bdclient.service
+```
+```
+systemctl enable --now bdclient.service
+```
