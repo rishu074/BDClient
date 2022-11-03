@@ -45,7 +45,7 @@ sudo apt update -y && sudo apt upgrade -y
 
 Installation of required packages
 ```
-sudo apt install nginx zip unzip wget curl -y
+sudo apt install nginx zip unzip wget curl git -y
 ```
 
 Installation of Client
