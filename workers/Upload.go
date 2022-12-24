@@ -149,11 +149,19 @@ func StartUploadWorker() {
 		}
 
 		Filename := backFireResponse.(map[string]interface{})["Filename"].(string)
+		type EndMessageStruct struct {
+			Event string
+		}
+		
 
 		ReadingFile, err := os.Open(Conf.Conf.DataDirectory + "/" + subfolder.Name() + "/" + Filename)
 		if(err != nil) {
-			logger.WriteERRLog(err)
-			return
+			dataTosend, _ = json.Marshal(EndMessageStruct{
+					Event: "end_s_chunk",
+					})
+			ws.WriteMessage(websocket.TextMessage, dataTosend)
+			logger.WriteLog("Send end data to remote endpoint")
+			continue
 		}
 		defer ReadingFile.Close()
 		FileInfo, _ := ReadingFile.Stat()
@@ -162,9 +170,7 @@ func StartUploadWorker() {
 		logger.WriteLog("Initializing File transfer..." + strconv.Itoa(int(TotalSize)))
 		var CurrentBytes int64 = 0
 
-		type EndMessageStruct struct {
-			Event string
-		}
+		
 
 		type ChunkMessage struct {
 			Event string
