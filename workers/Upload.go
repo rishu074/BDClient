@@ -104,12 +104,12 @@ func StartUploadWorker() {
 
 	defer endSharing(ws)
 
-	for _, subfolder := range subfolders {
+	for index, subfolder := range subfolders {
 		if !subfolder.IsDir() {
 			return
 		}
 		logger.WriteLog("Processing subfolder.." + subfolder.Name())
-
+		logger.WriteLog(strconv.Itoa(int((index/len(subfolders))*100)) + "% Done")
 		SubFolderName := subfolder.Name()
 
 		type SeverResponse struct {
@@ -152,13 +152,12 @@ func StartUploadWorker() {
 		type EndMessageStruct struct {
 			Event string
 		}
-		
 
 		ReadingFile, err := os.Open(Conf.Conf.DataDirectory + "/" + subfolder.Name() + "/" + Filename)
-		if(err != nil) {
+		if err != nil {
 			dataTosend, _ = json.Marshal(EndMessageStruct{
-					Event: "end_s_chunk",
-					})
+				Event: "end_s_chunk",
+			})
 			ws.WriteMessage(websocket.TextMessage, dataTosend)
 			logger.WriteLog("Send end data to remote endpoint")
 			continue
@@ -169,8 +168,6 @@ func StartUploadWorker() {
 		TotalSize := FileInfo.Size()
 		logger.WriteLog("Initializing File transfer..." + strconv.Itoa(int(TotalSize)))
 		var CurrentBytes int64 = 0
-
-		
 
 		type ChunkMessage struct {
 			Event string
