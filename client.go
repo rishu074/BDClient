@@ -22,6 +22,11 @@ func main() {
 		os.Exit(0)
 	}()
 
+	if _, err := os.Stat("./config.yml"); os.IsNotExist(err) {
+		log.Fatal("The config file not found")
+		os.Exit(1)
+	}
+
 	http.HandleFunc("/", router.DefaultHandler)
 	log.Println("Listening on " + strconv.Itoa(Conf.Conf.Port))
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(Conf.Conf.Port), nil))
