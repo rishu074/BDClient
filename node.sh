@@ -73,7 +73,7 @@ for dir in */
 do
         cd $dir
         echo "zipping $dir"
-        zip -r data.zip . -i ./*
+        zip -r data.zip ./*
         shopt -s extglob
         shopt -s dotglob
         for name in *
