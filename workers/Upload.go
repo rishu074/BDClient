@@ -150,7 +150,11 @@ func StartUploadWorker() {
 
 		Filename := backFireResponse.(map[string]interface{})["Filename"].(string)
 
-		ReadingFile, _ := os.Open(Conf.Conf.DataDirectory + "/" + subfolder.Name() + "/" + Filename)
+		ReadingFile, err := os.Open(Conf.Conf.DataDirectory + "/" + subfolder.Name() + "/" + Filename)
+		if(err != nil) {
+			logger.WriteERRLog(err)
+			return
+		}
 		defer ReadingFile.Close()
 		FileInfo, _ := ReadingFile.Stat()
 
