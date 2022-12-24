@@ -32,6 +32,6 @@ func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(`Started upload workers.`))
 	Stats.SetStats(true)
-	Workers.StartUploadWorker()
+	go Workers.StartUploadWorker()
 
 }
