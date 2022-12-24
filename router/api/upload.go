@@ -22,8 +22,6 @@ func UploadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	stat, _ := Stats.GetStats()
-
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	if stat {
 		w.Write([]byte(`Worker is already running.`))
