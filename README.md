@@ -5,10 +5,10 @@ This is the client for BDagent
 
 ## Installation
 
-This agent is only built for ubuntu/linux based distributions.
+This client is only built for ubuntu/linux based distributions.
 
 ```bash
-# Create the directory for agent
+# Create the directory for client
 $ mkdir /var/apps
 $ mkdir /var/apps/bdclient
 $ cd /var/apps/bdclient
